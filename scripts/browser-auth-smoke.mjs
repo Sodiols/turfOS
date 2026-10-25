@@ -22,6 +22,11 @@ try {
       assert.equal(response.status(), 200, route);
       assert.equal(await page.locator('h1').count(), 1, `${route} has one h1`);
       assert.equal(await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth + 2), false, `${route} overflow at ${width}`);
+      if (route.endsWith('/calendar')) {
+        await page.screenshot({ path: `.local/screens/calendar-${width}.png`, fullPage: true });
+        const axe = await new AxeBuilder({ page }).withTags(['wcag2a', 'wcag2aa']).analyze();
+        assert.equal(axe.violations.length, 0, JSON.stringify(axe.violations.map(v => ({ id: v.id, targets: v.nodes.map(n => n.target) }))));
+      }
       if (route.endsWith('/overview')) {
         await page.screenshot({ path: `.local/screens/workspace-${width}.png`, fullPage: true });
         const axe = await new AxeBuilder({ page }).withTags(['wcag2a', 'wcag2aa']).analyze();
@@ -29,6 +34,16 @@ try {
       }
     }
     if (width === 1440) {
+      await page.goto(`${origin}/app/${slug}/calendar?view=day&date=2026-10-25`);
+      assert.equal(await page.locator('.timeline-table tbody tr').count(), 48, '30-minute timeline');
+      await page.locator('.timeline-open a').first().click();
+      await page.getByRole('dialog', { name: 'New booking' }).waitFor();
+      assert.match(page.url(), /slot=/);
+      assert.equal(await page.locator('input[name="starts_at"]').inputValue(), `2026-10-25T${new URL(page.url()).searchParams.get('slot')}`);
+      await page.goto(`${origin}/app/${slug}/calendar?view=week&date=2026-10-25`);
+      assert.equal(await page.locator('.calendar-day').count(), 7);
+      await page.goto(`${origin}/app/${slug}/calendar?view=month&date=2026-10-25`);
+      assert.equal(await page.locator('.calendar-day').count(), 31);
       const exportResponse = await page.request.get(`${origin}/api/workspaces/${slug}/reports.csv?range=7&date=2026-10-25`);
       assert.equal(exportResponse.status(), 200, 'owner CSV export');
       assert.match(exportResponse.headers()['content-type'], /text\/csv/);

@@ -23,11 +23,11 @@ Visual: #14283B navy, #008F8B teal, #F4F8F9 background, #203247 text. 248px desk
 ## Verified locally
 - `npm run lint`, `npm run typecheck`, `npm run build`, `npm test`, and `npm run test:db` pass after the report export addition.
 - Local PostgreSQL tests passed full migration, the second migration with older-note data, migration replay, cross-tenant read/write denial, simultaneous booking conflict, idempotency, ledger limits, role denial, reports and read-only subscription enforcement.
-- Desktop and mobile public-route browser smoke passed at 1440px and 390px, including home-page WCAG 2 A/AA automated checks and no horizontal overflow. Authenticated owner smoke passed overview, calendar, bookings, customers, and reports at both widths; overview WCAG 2 A/AA automated checks found no violations. This does not cover every workflow or assistive technology.
+- Desktop and mobile public-route browser smoke passed at 1440px and 390px, including home-page WCAG 2 A/AA automated checks and no horizontal overflow. Authenticated owner smoke passed overview, calendar, bookings, customers, and reports at both widths; overview and calendar WCAG 2 A/AA automated checks found no violations. Day cells, slot prefill, week navigation and month navigation passed with synthetic data. This does not cover every workflow or assistive technology.
 
 ## Remaining P0 work and limitations
 - Perform complete authenticated staging E2E for signup, email verification, onboarding, all booking and payment edits, and admin MFA. Configure verified email delivery and safe invitation sharing.
-- Calendar day/week/month views need full resource timeline interaction and booking cell prefill. Booking detail supports rescheduling and state change; general detail edits remain to implement.
+- The day calendar has a 30-minute facility timeline and cell-to-booking prefill; week/month show per-day summaries that open the day timeline. Deeper week/month resource grids and booking detail edits remain to implement.
 - Admin plan changes and subscription settlement need live staging verification. Direct invoice download and a full customer-facing booking lookup need later work.
 - Complete monitoring, backup/restore drill, rate-limit abuse test, cross-browser/device checks, support process and qualified legal review before any paid pilot.
 

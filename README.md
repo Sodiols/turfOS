@@ -20,6 +20,7 @@ An authorized database operator must add a verified identity to `public.platform
 - `node scripts/browser-smoke.mjs` checks public routes, desktop/mobile overflow, and a WCAG 2 A/AA scan. Start the dev server first. This script currently uses a local Chrome path on Windows.
 - `node scripts/browser-auth-smoke.mjs` checks authenticated owner routes in the confirmed development project using synthetic users saved by the hosted QA scripts in ignored `.local/`.
 - Owner and manager reports can be downloaded as a CSV from the Reports page. The export uses the selected date range and branch and escapes spreadsheet formulas in facility names.
+- The calendar shows a 30-minute day timeline by facility. Selecting an open cell prefills the new booking drawer; week and month summaries open the corresponding day.
 
 For subscription transitions, schedule `POST /api/internal/subscriptions` with `Authorization: Bearer <CRON_AUTH_TOKEN>`. Booking writes enforce subscription deadlines even if this job is late. Staff invitations currently return an expiring single-use link to share privately; automatic email delivery needs a verified sender. Legal pages remain drafts pending qualified local review.
 
