@@ -1,0 +1,2 @@
+"use client";import Link from "next/link";
+export default function ErrorPage({reset}:{reset:()=>void}){return <main id="main" className="narrow"><h1>We couldn’t load this page</h1><p>Your changes may not have saved. Retry to refresh the current state before submitting again.</p><button className="button primary" onClick={reset}>Try again</button><Link href="/workspaces">Return to workspaces</Link></main>}

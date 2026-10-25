@@ -1,0 +1,1 @@
+import Link from "next/link";export default function Offline(){return <main id="main" className="narrow"><h1>Connection unavailable</h1><p>Check your connection, then refresh before submitting a booking again. Keep a manual note of urgent changes until the workspace is available.</p><Link href="/">Return home</Link></main>}

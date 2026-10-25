@@ -1,0 +1,1 @@
+import Link from "next/link";export default function NotFound(){return <main id="main" className="narrow"><p className="eyebrow">404 · Page unavailable</p><h1>This page isn’t available</h1><p>Check the address or choose a workspace you have access to.</p><Link className="button primary" href="/workspaces">Your workspaces</Link></main>}

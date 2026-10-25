@@ -1,0 +1,7 @@
+import "server-only";
+import { cache } from "react";
+import { redirect, notFound } from "next/navigation";
+import { database, configured } from "./supabase";
+import type { Business, Member } from "./domain";
+export const getWorkspace=cache(async(slug:string)=>{ if(!configured()) redirect("/setup"); const db=await database(); const {data:{user}}=await db.auth.getUser(); if(!user) redirect("/login"); const {data:business,error}=await db.from("businesses").select("*").eq("slug",slug).maybeSingle(); if(error) throw new Error("Cannot load workspace. Check database migrations and connection."); if(!business) notFound(); const {data:member}=await db.from("business_members").select("*").eq("business_id",business.id).eq("user_id",user.id).eq("active",true).maybeSingle(); if(!member) redirect("/access-denied"); const {data:access,error:accessError}=await db.rpc("workspace_access",{b:business.id}); if(accessError) throw new Error(accessError.message); return {db,user,business:business as Business,member:member as Member,finance:Boolean(access.finance),collect:Boolean(access.collect),writable:Boolean(access.writable)}; });
+export async function requireAdmin(){if(!configured()) redirect("/setup"); const db=await database(); const {data:{user}}=await db.auth.getUser(); if(!user) redirect("/login"); const {data,error}=await db.rpc("is_admin"); if(error || !data) redirect("/mfa"); return {db,user}; }

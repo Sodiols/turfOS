@@ -1,0 +1,1 @@
+import Link from "next/link";export default function Denied(){return <main id="main" className="narrow"><h1>Access denied</h1><p>You do not have the required permission for this workspace or route.</p><Link className="button primary" href="/workspaces">Choose another workspace</Link></main>}

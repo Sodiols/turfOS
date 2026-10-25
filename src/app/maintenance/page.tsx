@@ -1,0 +1,1 @@
+import Link from "next/link";export default function Maintenance(){return <main id="main" className="narrow"><h1>Service temporarily unavailable</h1><p>Retry in a few minutes. If a booking is urgent, contact your facility directly.</p><Link href="/">Return home</Link></main>}

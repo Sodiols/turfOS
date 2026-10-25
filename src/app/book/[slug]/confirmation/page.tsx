@@ -1,0 +1,1 @@
+import {Confirmation} from "@/components/public-booking";export default async function Done({params,searchParams}:{params:Promise<{slug:string}>;searchParams:Promise<{ref?:string}>}){const {slug}=await params;const {ref}=await searchParams;return <Confirmation slug={slug} ref={ref??""}/>}
